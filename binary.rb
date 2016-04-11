@@ -1,23 +1,21 @@
 class Binary
   VERSION = 2
-  def initialize(binary)
-    raise ArgumentError.new("error") unless valid?(binary)
-    @binary = binary
+  def initialize(binary_str)
+    raise ArgumentError.new("Not a valid binary number") unless valid?(binary_str)
+    @binary_str = binary_str
   end
 
   def to_decimal
-    digit_index = @binary.length - 1
-    digit_array = @binary.chars
+    digits = @binary_str.chars.reverse
     base10 = 0
 
-    digit_array.each do |digit|
-      base10 += (digit.to_i * (2 ** digit_index))
-      digit_index -= 1
+    digits.each_with_index do |digit, index|
+      base10 += (digit.to_i * (2 ** index))
     end
     return base10
   end
 
-  def valid?(binary)
-    binary.chars.all? { |char| ['0', '1'].include?(char)}
+  def valid?(binary_str)
+    binary_str.chars.all? {|char| ['0', '1'].include?(char)}
   end
 end
